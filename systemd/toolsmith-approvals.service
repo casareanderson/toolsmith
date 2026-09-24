@@ -1,0 +1,14 @@
+[Unit]
+Description=Hermes Toolsmith approval poller (owner reactions on ADOPT-TRIAL messages)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=HOME=/root
+Environment=HERMES_HOME=/root/.hermes
+EnvironmentFile=-/etc/toolsmith/secrets.env
+ExecStart=/usr/local/lib/hermes-agent/venv/bin/python /root/.hermes/scripts/toolsmith_approvals.py poll
+TimeoutStartSec=5min
+StandardOutput=append:/var/log/toolsmith-approvals.log
+StandardError=append:/var/log/toolsmith-approvals.log

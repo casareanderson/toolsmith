@@ -1,0 +1,74 @@
+{
+  "run_id": "ts-20260914-222042-5a8f",
+  "started_at": "2026-09-14T21:20:42Z",
+  "spec": {
+    "candidate": "refusal-path self-test",
+    "image": "traefik/whoami:v1.10",
+    "port": 80,
+    "health_path": "/",
+    "env": {},
+    "command": [],
+    "mem_mb": 2048,
+    "cpus": 1.0,
+    "pids": 256,
+    "timeout_s": 300,
+    "egress": false,
+    "max_image_mb": 6000,
+    "tmpfs": [],
+    "source_url": ""
+  },
+  "status": "refused",
+  "refusal_reasons": [
+    "no sandbox host qualifies: CT104 docker: CT MemAvailable 1585MB < 2x cap (4096MB), node MemAvailable 2403MB < 2x cap (4096MB); CT105 obico: CT MemAvailable 2340MB < 2x cap (4096MB)"
+  ],
+  "host": null,
+  "host_measurements": [
+    {
+      "node": "192.0.2.20",
+      "ct": 104,
+      "measured_at": "2026-09-14T21:20:44Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "56",
+        "disk_free_mb": "25709",
+        "ct_mem_total_mb": "4096",
+        "ct_mem_avail_mb": "1585",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "2403"
+      },
+      "reasons": [
+        "CT MemAvailable 1585MB < 2x cap (4096MB)",
+        "node MemAvailable 2403MB < 2x cap (4096MB)"
+      ],
+      "qualifies": false,
+      "name": "docker"
+    },
+    {
+      "node": "192.0.2.10",
+      "ct": 105,
+      "measured_at": "2026-09-14T21:20:45Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "41",
+        "disk_free_mb": "22723",
+        "ct_mem_total_mb": "3072",
+        "ct_mem_avail_mb": "2340",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "10624"
+      },
+      "reasons": [
+        "CT MemAvailable 2340MB < 2x cap (4096MB)"
+      ],
+      "qualifies": false,
+      "name": "obico"
+    }
+  ],
+  "measurements": {},
+  "cleanup": {},
+  "notes": [],
+  "finished_at": "2026-09-14T21:20:45Z"
+}

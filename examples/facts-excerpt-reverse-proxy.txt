@@ -1,0 +1,72 @@
+# EXCERPT of a real fact pack (area reverse-proxy, 2026-09-17), sanitised for publication.
+# Host names and addresses are replaced; the recorded-incident section (F039-F078) and the
+# full inventory (F087-F099) are cut except for two lines. Numbers are as measured.
+
+# TOOLSMITH FACT PACK — area: reverse-proxy (Reverse proxy / ingress / tunnels)
+generated 2026-09-17 09:31 UTC by toolsmith-gather.py (no LLM). Cite estate facts as [F###].
+AREA=reverse-proxy
+
+===== GATHERER GAPS (things this run could not look at — NOT an all-clear) =====
+[F001] GAP: none — both Proxmox nodes, the nas and gpu-host all answered
+
+===== OWNER STANDING PREFERENCES (verified against their recorded source this run) =====
+[F002] Tools must be free and open source; this was the explicit constraint when Langfuse was chosen. [source memory:notes-langfuse.md]
+[F003] Prefer free self-hosted services over paid managed gateways (web search was moved off the paid Nous gateway onto SearXNG). [source memory:notes-hermes-tools-searxng-comfyui.md]
+[F004] LLM spend is capped: OpenRouter was funded with a one-off $10 and a monitor alerts above a $10 monthly projection. [source memory:notes-hermes-openrouter-fallback.md]
+[F005] sec and reviewer profiles stay local-only: no third-party egress of their data. Any SaaS/cloud tracing candidate would send prompt data off-site. [source memory:notes-hermes-openrouter-fallback.md]
+[F006] Licences are checked from primary sources; non-commercial or source-available terms are a finding, and banned families exist (XTTS-v2, F5-TTS). [source memory:notes-legal-agent.md]
+[F007] Langfuse is on a 4-week trial; keep-vs-retire decision due ~2026-10-12. [source memory:notes-langfuse.md]
+[F008] Facts are gathered by scripts; the model never collects them or fills gaps by inference. [source file:/root/.hermes/AUTHORITY.md]
+
+===== AREA ROTATION (derived from the live inventory; this run = reverse-proxy) =====
+[F009] areas with >=1 live incumbent, in rotation order: observability, reverse-proxy, dashboards, secrets-identity, backups, dns-vpn, media, ai-serving, security, home-automation, dev-tooling, 3d-printing
+[F010] previous toolsmith run area: observability
+
+===== INCUMBENTS IN AREA reverse-proxy (measured now) =====
+[F011] docker 'cloudflared-connector', image cloudflare/cloudflared:latest, on nas, memory in use 30.8 MB, CPU 0.44%, restart count 0, running since 2026-09-04T22:52:00Z
+[F012] docker 'cloudflared-web', image wisdomsky/cloudflared-web:2026.5.0, on nas, memory in use 10.9 MB, CPU 0.00%, restart count 0, running since 2026-09-04T22:43:19Z
+[F013] docker 'practical_lehmann', image wisdomsky/cloudflared-web:2026.5.0, on nas, memory in use 13.3 MB, CPU 0.00%, restart count 0, running since 2026-09-03T22:06:03Z
+[F014] docker 'npmplus', image zoeyvid/npmplus:latest, on nas, memory in use 119.1 MB, CPU 9.23%, restart count 0, running since 2026-09-02T08:52:59Z, health healthy
+
+===== HOST CAPACITY (measured now; LXC view of each CT, node view of each hypervisor) =====
+[F015] node node-b (192.0.2.10): MemTotal 15413 MB, MemAvailable 10238 MB
+[F016] node node-b storage pool local: 62.20% used
+[F017] node node-b storage pool data-hdd: 8.28% used
+[F018] node node-b storage pool nas-backup: 34.56% used
+[F019] node node-b disk sda rotational=1 size 931.5G model ST1000LM024 HN-M101MBB
+[F020] node node-b disk nvme0n1 rotational=0 size 13.4G model INTEL MEMPEK1J016GAH
+[F021] node node-a (192.0.2.20): MemTotal 7780 MB, MemAvailable 3005 MB
+[F022] node node-a storage pool local: 45.35% used
+[F023] node node-a storage pool local-lvm: 9.88% used
+[F024] node node-a storage pool nas-backup: 34.56% used
+[F025] node node-a disk sda rotational=0 size 111.8G model WDC WDS120G1G0A-00SS50
+[F026] node node-a disk nvme0n1 rotational=0 size 931.5G model Samsung SSD 970 EVO Plus 1TB
+[F027] node-b CT100 hermes: rootfs 41% used, 21300 MB free of 37997 MB; RAM 7116 MB available of 8192 MB; 0 docker containers; storage data-hdd
+[F028] node-b CT105 obico: rootfs 41% used, 22721 MB free of 40141 MB; RAM 2398 MB available of 3072 MB; 4 docker containers; storage data-hdd
+[F029] node-b CT110 vaultwarden: rootfs 42% used, 2172 MB free of 3951 MB; RAM 944 MB available of 1024 MB; 1 docker containers; storage data-hdd
+[F030] node-b CT112 langfuse: rootfs 14% used, 49259 MB free of 60167 MB; RAM 4419 MB available of 6144 MB; 6 docker containers; storage data-hdd
+[F031] node-a CT101 uptimekuma: rootfs 22% used, 12075 MB free of 16040 MB; RAM 856 MB available of 1024 MB; 0 docker containers; storage local-lvm
+[F032] node-a CT103 secrets: rootfs 62% used, 2178 MB free of 5959 MB; RAM 1417 MB available of 2048 MB; 0 docker containers; storage local-lvm
+[F033] node-a CT104 docker: rootfs 60% used, 23562 MB free of 60386 MB; RAM 1667 MB available of 4096 MB; 12 docker containers; storage local-lvm
+[F034] node-a CT106 crowdsec: rootfs 20% used, 11523 MB free of 15014 MB; RAM 1945 MB available of 2048 MB; 0 docker containers; storage local-lvm
+[F035] node-a CT107 gitea: rootfs 25% used, 5669 MB free of 7963 MB; RAM 937 MB available of 1024 MB; 0 docker containers; storage local-lvm
+[F036] node-a CT108 proxynode: rootfs 29% used, 16429 MB free of 24018 MB; RAM 1651 MB available of 2048 MB; 4 docker containers; storage local-lvm
+[F037] nas: rootfs 100% used, 0 MB free of 1664 MB; RAM 12509 MB available of 15843 MB; 16 docker containers
+[F038] gpu-host: rootfs 34% used, 291766 MB free of 459771 MB; RAM 26513 MB available of 31961 MB; 1 docker containers
+
+===== RECORDED INCIDENTS / PAIN (operator notes; dated by file mtime; RECORDED, not re-measured) =====
+[F040] recorded in notes-dhcp-lease-churn.md:82 (file last modified 2026-09-03): ⚠️ `caddy validate` is unavailable — the binary is not on `$PATH` in CT100; `reload` is the check.
+[F051] recorded in notes-cf-tunnel-connector.md:18 (file last modified 2026-09-13): ⚠️ **`cloudflared-web` is a WEB UI, not a connector.** With no config it happily runs,
+  (... 38 more lines cut for publication ...)
+
+===== SANDBOX HOSTS (measured now for a 512 MB cap; toolsmith_sandbox.sh applies the same test at run time) =====
+[F079] sandbox host CT104 docker (general docker host on node-a (SSD pool)): qualifies=True; rootfs 60%, CT MemAvailable 1665 MB, node MemAvailable 2782 MB, disk free 23562 MB
+[F080] sandbox host CT105 obico (node-b docker CT (5400rpm HDD pool, slower pulls)): qualifies=True; rootfs 41%, CT MemAvailable 2398 MB, node MemAvailable 10304 MB, disk free 22721 MB
+[F081] never a sandbox host: 192.0.2.20:108 — proxynode runs Home Assistant + NetBird + Mosquitto (house-critical)
+[F082] never a sandbox host: 192.0.2.10:112 — langfuse is an incumbent under evaluation and the node-b reboot IO-storm guest
+[F083] never a sandbox host: 192.0.2.10:100 — hermes itself; no docker
+[F084] never a sandbox host: 192.0.2.149 — nas: rootfs is 100% (read-only squashfs), runs Authelia/NPMplus/Immich
+[F085] never a sandbox host: 192.0.2.152 — gpu-host GPU/LLM host serving every local model
+
+===== PREVIOUS TOOLSMITH DECISIONS (approvals state) =====
+[F086] no previous recommendations have been posted for approval

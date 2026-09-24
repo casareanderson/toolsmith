@@ -1,0 +1,95 @@
+{
+  "run_id": "ts-20260914-230927-e882",
+  "started_at": "2026-09-14T22:09:27Z",
+  "spec": {
+    "candidate": "OpenLIT",
+    "image": "openlit/backend:openlit-2.1.0",
+    "port": 3000,
+    "health_path": "/health",
+    "env": {
+      "OPENLIT_CLICKHOUSE_HOST": "clickhouse",
+      "OPENLIT_CLICKHOUSE_PORT": "9000",
+      "DATABASE_URL": "sqlite:./openlit.db"
+    },
+    "command": [],
+    "mem_mb": 1024,
+    "cpus": 1.0,
+    "pids": 256,
+    "timeout_s": 420,
+    "egress": false,
+    "max_image_mb": 3000,
+    "tmpfs": [
+      "/tmp"
+    ],
+    "source_url": "https://github.com/openlit/openlit/releases/tag/openlit-2.1.0"
+  },
+  "status": "failed",
+  "refusal_reasons": [],
+  "host": {
+    "node": "192.0.2.10",
+    "ct": 105,
+    "name": "obico"
+  },
+  "host_measurements": [
+    {
+      "node": "192.0.2.20",
+      "ct": 104,
+      "measured_at": "2026-09-14T22:09:29Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "56",
+        "disk_free_mb": "25654",
+        "ct_mem_total_mb": "4096",
+        "ct_mem_avail_mb": "1069",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "1985"
+      },
+      "reasons": [
+        "CT MemAvailable 1069MB < 2x cap (2048MB)",
+        "node MemAvailable 1985MB < 2x cap (2048MB)"
+      ],
+      "qualifies": false,
+      "name": "docker"
+    },
+    {
+      "node": "192.0.2.10",
+      "ct": 105,
+      "measured_at": "2026-09-14T22:09:31Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "41",
+        "disk_free_mb": "22723",
+        "ct_mem_total_mb": "3072",
+        "ct_mem_avail_mb": "2352",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "10670"
+      },
+      "reasons": [],
+      "qualifies": true,
+      "name": "obico"
+    }
+  ],
+  "measurements": {
+    "pull_s": 2.0
+  },
+  "cleanup": {
+    "reaper_armed": true,
+    "left_containers": "0",
+    "left_networks": "0",
+    "left_images": "0",
+    "foreign_containers_changed": "0",
+    "foreign_images_removed": "0",
+    "images_added_and_left": "0",
+    "foreign_volumes_changed": "0",
+    "verified_clean": true
+  },
+  "notes": [
+    "base image absent before this run (this run pulls it and untags it afterwards)",
+    "pull failed rc=1: Error response from daemon: pull access denied for openlit/backend, repository does not exist or may require 'docker login'"
+  ],
+  "finished_at": "2026-09-14T22:09:37Z"
+}

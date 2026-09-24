@@ -1,0 +1,73 @@
+# toolsmith.conf — NON-SECRET settings. Copy to $TOOLSMITH_HOME/toolsmith.conf
+# (default ~/.hermes/toolsmith/toolsmith.conf) or point TOOLSMITH_CONF at it.
+# Environment variables with the same name override this file.
+#
+# Secrets NEVER go here. The only secret is the Discord bot token, read from the
+# environment as TOOLSMITH_DISCORD_BOT_TOKEN (e.g. a systemd EnvironmentFile with
+# mode 0600, or injected by your secrets manager). A TOOLSMITH_DISCORD_BOT_TOKEN
+# line in this file is ignored on purpose.
+#
+# Addresses below are RFC 5737 documentation addresses — replace them.
+
+# ---------------------------------------------------------------- Discord
+# Channel for the weekly summary and one approval message per ADOPT-TRIAL.
+TOOLSMITH_DISCORD_CHANNEL_ID=
+# The ONLY Discord user whose ✅/❌ reactions count as approval. Empty = poller refuses to run.
+TOOLSMITH_OWNER_DISCORD_ID=
+# A rejected candidate is not re-proposed for this many weeks.
+TOOLSMITH_REJECT_COOLDOWN_WEEKS=12
+# A pending approval with no owner reaction expires after this many days.
+TOOLSMITH_APPROVAL_EXPIRY_DAYS=14
+
+# ---------------------------------------------------------------- Kanban (on owner ✅)
+TOOLSMITH_KANBAN_BOARD=it
+TOOLSMITH_KANBAN_ASSIGNEE=coder
+# Optional: $TOOLSMITH_HOME/card-access.txt is pasted into each approved card
+# (how the ops agent reaches your hosts). Keep secrets out of it.
+
+# ---------------------------------------------------------------- Inventory (gatherer)
+# Proxmox nodes, name=ip, space-separated. Reached as root@ip with key auth; every
+# running CT is probed read-only with `pct exec`.
+TOOLSMITH_PROXMOX_NODES=node-a=192.0.2.20 node-b=192.0.2.10
+# Other docker hosts (NAS, GPU box), label=user@host, space-separated. Optional.
+TOOLSMITH_SSH_HOSTS=nas=admin@192.0.2.149 gpu=llm@192.0.2.152
+# Labels from TOOLSMITH_SSH_HOSTS that also get an Ollama /api/ps + systemd unit probe.
+TOOLSMITH_OLLAMA_HOSTS=gpu
+TOOLSMITH_HOST_UNITS=ollama comfyui
+# How the Hermes box itself is labelled in the inventory (its systemd timers count as services).
+TOOLSMITH_SELF_NODE=node-b
+TOOLSMITH_SELF_CT=100
+
+# Operator notes (a directory of markdown files) mined for dated "recorded incident"
+# lines per area. Empty = that section prints NOT MEASURED. NOTES_SSH empty = local dir.
+TOOLSMITH_NOTES_DIR=
+TOOLSMITH_NOTES_SSH=
+# Optional single lessons file, grepped by area keyword.
+TOOLSMITH_KB_LESSONS=
+
+# Example deep probe for the "observability" area: a Langfuse compose stack in a CT.
+TOOLSMITH_LANGFUSE_NODE=
+TOOLSMITH_LANGFUSE_CT=
+
+# ---------------------------------------------------------------- Sandbox
+# Docker host CTs the sandbox may use, in preference order:
+#   node_ip:ct:name:free-text note ; node_ip:ct:name:note
+# Each is re-measured before every run (rootfs <= 80%, CT and node MemAvailable
+# >= 2x cap, disk >= 2x max image size, no other toolsmith container live).
+TOOLSMITH_SANDBOX_HOSTS=192.0.2.20:104:docker:general docker host (SSD pool);192.0.2.10:105:docker2:second docker CT (HDD pool, slower pulls)
+# Never used, and recorded so the refusal is explicit: node_ip:ct=reason ; host=reason
+TOOLSMITH_EXCLUDED_HOSTS=192.0.2.20:108=house-critical (Home Assistant);192.0.2.149=NAS, rootfs full;192.0.2.152=GPU host serving local models
+# Extra .env files whose VALUES a sandbox spec may never contain (space-separated).
+# $HERMES_HOME/.env and every profile .env are always included.
+TOOLSMITH_EXTRA_ENV_FILES=
+
+# ---------------------------------------------------------------- Guard
+# Your own internal domains; the guard never lets curl reach them or their subdomains.
+# .lan .local .lab .internal .home.arpa, localhost and bare IPs are always blocked.
+TOOLSMITH_PRIVATE_DOMAINS=home.example.org
+
+# ---------------------------------------------------------------- Hermes paths (defaults shown)
+#HERMES_BIN=/usr/local/bin/hermes
+#HERMES_VENV=/usr/local/lib/hermes-agent/venv
+#HERMES_SRC=/usr/local/lib/hermes-agent
+#TOOLSMITH_PROFILE=toolsmith

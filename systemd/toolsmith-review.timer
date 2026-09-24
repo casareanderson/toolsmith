@@ -1,0 +1,12 @@
+[Unit]
+Description=Hermes Toolsmith weekly review — Thursdays 10:30 (local time)
+
+[Timer]
+OnCalendar=Thu *-*-* 10:30:00
+# The author ran Persistent=false and lost a week when the box rebooted after 10:30.
+# true = a missed run starts at boot instead.
+Persistent=true
+Unit=toolsmith-review.service
+
+[Install]
+WantedBy=timers.target
