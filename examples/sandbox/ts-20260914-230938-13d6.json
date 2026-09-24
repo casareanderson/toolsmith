@@ -1,0 +1,87 @@
+{
+  "run_id": "ts-20260914-230938-13d6",
+  "started_at": "2026-09-14T22:09:38Z",
+  "spec": {
+    "candidate": "OpenLIT-clickhouse",
+    "image": "clickhouse/clickhouse-server:25.12",
+    "port": 8123,
+    "health_path": "/",
+    "env": {
+      "CLICKHOUSE_DB": "openlit",
+      "CLICKHOUSE_USER": "default",
+      "CLICKHOUSE_PASSWORD": "toolsmith-dummy-password-change-me"
+    },
+    "command": [],
+    "mem_mb": 512,
+    "cpus": 1.0,
+    "pids": 256,
+    "timeout_s": 420,
+    "egress": false,
+    "max_image_mb": 500,
+    "tmpfs": [
+      "/var/lib/clickhouse",
+      "/tmp"
+    ],
+    "source_url": "https://hub.docker.com/_/clickhouse-server"
+  },
+  "status": "unhealthy",
+  "refusal_reasons": [],
+  "host": {
+    "node": "192.0.2.20",
+    "ct": 104,
+    "name": "docker"
+  },
+  "host_measurements": [
+    {
+      "node": "192.0.2.20",
+      "ct": 104,
+      "measured_at": "2026-09-14T22:09:39Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "56",
+        "disk_free_mb": "25654",
+        "ct_mem_total_mb": "4096",
+        "ct_mem_avail_mb": "1134",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "1984"
+      },
+      "reasons": [],
+      "qualifies": true,
+      "name": "docker"
+    }
+  ],
+  "measurements": {
+    "pull_s": 13.7,
+    "image_size_mb": 235.3,
+    "image_labelled": true,
+    "started": true,
+    "health_url": "http://<container-ip>:8123/",
+    "last_http_code": "000",
+    "healthy": false,
+    "log_tail": [
+      "/entrypoint.sh: create new user 'default' instead 'default'",
+      "Processing configuration file '/etc/clickhouse-server/config.xml'.",
+      "Merging configuration file '/etc/clickhouse-server/config.d/docker_related_config.xml'.",
+      "Logging trace to /var/log/clickhouse-server/clickhouse-server.log",
+      "Logging errors to /var/log/clickhouse-server/clickhouse-server.err.log",
+      "/entrypoint.sh: line 166:    75 Aborted                 (core dumped) clickhouse su \"${USER}:${GROUP}\" clickhouse-server --config-file=\"$CLICKHOUSE_CONFIG\" -- --listen_host=127.0.0.1"
+    ]
+  },
+  "cleanup": {
+    "reaper_armed": true,
+    "left_containers": "0",
+    "left_networks": "0",
+    "left_images": "0",
+    "foreign_containers_changed": "0",
+    "foreign_images_removed": "0",
+    "images_added_and_left": "0",
+    "foreign_volumes_changed": "0",
+    "verified_clean": true
+  },
+  "notes": [
+    "base image absent before this run (this run pulls it and untags it afterwards)"
+  ],
+  "finished_at": "2026-09-14T22:16:34Z"
+}

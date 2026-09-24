@@ -1,0 +1,86 @@
+{
+  "run_id": "ts-20260914-222141-6fd5",
+  "started_at": "2026-09-14T21:21:41Z",
+  "spec": {
+    "candidate": "egress self-test (busybox)",
+    "image": "busybox:1.37",
+    "port": null,
+    "health_path": "/",
+    "env": {},
+    "command": [
+      "sh",
+      "-c",
+      "wget -T 4 -q -O /dev/null http://192.0.2.1/ && echo LAN_REACHED || echo LAN_BLOCKED; wget -T 4 -q -O /dev/null http://1.1.1.1/ && echo NET_REACHED || echo NET_BLOCKED; sleep 60"
+    ],
+    "mem_mb": 64,
+    "cpus": 0.5,
+    "pids": 256,
+    "timeout_s": 90,
+    "egress": false,
+    "max_image_mb": 50,
+    "tmpfs": [],
+    "source_url": ""
+  },
+  "status": "started-no-port",
+  "refusal_reasons": [],
+  "host": {
+    "node": "192.0.2.20",
+    "ct": 104,
+    "name": "docker"
+  },
+  "host_measurements": [
+    {
+      "node": "192.0.2.20",
+      "ct": 104,
+      "measured_at": "2026-09-14T21:21:42Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "56",
+        "disk_free_mb": "25699",
+        "ct_mem_total_mb": "4096",
+        "ct_mem_avail_mb": "1585",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "2294"
+      },
+      "reasons": [],
+      "qualifies": true,
+      "name": "docker"
+    }
+  ],
+  "measurements": {
+    "pull_s": 4.3,
+    "image_size_mb": 2.1,
+    "image_labelled": true,
+    "started": true,
+    "health_url": null,
+    "last_http_code": "000",
+    "healthy": false,
+    "startup_s": 22.4,
+    "docker_stats_raw": "472KiB / 64MiB|0.00%|1",
+    "mem_usage_mb": 0.5,
+    "mem_note": "docker stats MemUsage (cgroup usage minus inactive file cache), sampled 10s after first healthy response",
+    "log_tail": [
+      "wget: can't connect to remote host (192.0.2.1): Network is unreachable",
+      "LAN_BLOCKED",
+      "wget: can't connect to remote host (1.1.1.1): Network is unreachable",
+      "NET_BLOCKED"
+    ]
+  },
+  "cleanup": {
+    "reaper_armed": true,
+    "left_containers": "0",
+    "left_networks": "0",
+    "left_images": "0",
+    "foreign_containers_changed": "0",
+    "foreign_images_removed": "0",
+    "images_added_and_left": "0",
+    "foreign_volumes_changed": "0",
+    "verified_clean": true
+  },
+  "notes": [
+    "base image absent before this run (this run pulls it and untags it afterwards)"
+  ],
+  "finished_at": "2026-09-14T21:22:32Z"
+}

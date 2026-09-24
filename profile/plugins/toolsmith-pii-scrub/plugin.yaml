@@ -1,0 +1,5 @@
+name: toolsmith-pii-scrub
+version: "1.0"
+description: "toolsmith only: scrub e-mail addresses and phone numbers from web tool results before they enter the model context. OpenRouter's PII guardrail rejects the whole request (403 'PII detected (invalid_json_after_redaction)') when a fetched web page contains them, which silently pushed toolsmith onto the slow local fallback."
+hooks:
+  - transform_tool_result

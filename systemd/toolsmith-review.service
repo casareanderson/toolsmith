@@ -1,0 +1,16 @@
+[Unit]
+Description=Hermes Toolsmith weekly tool review (gather -> research -> sandbox -> report -> validate -> Discord)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=HOME=/root
+Environment=HERMES_HOME=/root/.hermes
+# TOOLSMITH_DISCORD_BOT_TOKEN=... (mode 0600). Never put it in toolsmith.conf.
+EnvironmentFile=-/etc/toolsmith/secrets.env
+ExecStart=/root/.hermes/scripts/toolsmith-review.sh
+TimeoutStartSec=3h
+Nice=10
+StandardOutput=append:/var/log/toolsmith-review.log
+StandardError=append:/var/log/toolsmith-review.log

@@ -1,0 +1,30 @@
+{
+  "sessions_checked": 2,
+  "urls_seen_this_run": 540,
+  "summary_ok": false,
+  "passed": [],
+  "withheld": [
+    [
+      "Keep & slim (decommission cloudflared-web, migrate off NPMplus, kill npmplus after migration)",
+      [
+        "URL not fetched this run: https://github.com/ZoeyVid/NPMPlus/blob/main/LICENSE",
+        "licence has no valid class (OSI | source-available | non-commercial | unknown)",
+        "no candidate source URL",
+        "uncited measurement '0 MB' (no [F###], URL or run_id on that line)"
+      ]
+    ],
+    [
+      "Caddy (expand existing deployment on CT100)",
+      [
+        "number(s) 2.0 next to [F002], [F006], [F027] are not in those fact lines"
+      ]
+    ],
+    [
+      "Traefik v3 (replace both NPMplus and Caddy)",
+      [
+        "incumbent pain carries no [F###] fact id"
+      ]
+    ]
+  ],
+  "fatal": null
+}

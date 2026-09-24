@@ -1,0 +1,26 @@
+{
+  "sessions_checked": 2,
+  "urls_seen_this_run": 627,
+  "summary_ok": false,
+  "passed": [
+    "SigNoz",
+    "HyperDX",
+    "Grafana OSS (read-only complement)"
+  ],
+  "withheld": [
+    [
+      "Keep the incumbent \u2014 Langfuse v4 on CT112",
+      [
+        "no candidate source URL",
+        "number(s) 15 next to [F011], [F012], [F013], [F014], [F015], [F016], [F021], [F046], [F054], [F055] are not in those fact lines"
+      ]
+    ],
+    [
+      "OpenLIT",
+      [
+        "number(s) 3 next to [F021], [F046] are not in those fact lines"
+      ]
+    ]
+  ],
+  "fatal": null
+}

@@ -1,0 +1,17 @@
+{
+  "_doc": "Owner's standing preferences. Each entry is printed into the fact pack only if its 'quote' is still found verbatim in 'source': 'memory:<file>' (a file in TOOLSMITH_NOTES_DIR) or 'file:<absolute path>'. A preference whose quote vanished is printed as UNVERIFIED, so a stale rule cannot pass as current. These entries are examples of the shape the author uses; replace them with your own.",
+  "entries": [
+    {"pref": "Tools must be free and open source.",
+     "source": "memory:observability.md", "quote": "Free (open source),"},
+    {"pref": "Prefer free self-hosted services over paid managed gateways.",
+     "source": "memory:web-search.md", "quote": "**free, self-hosted** web search"},
+    {"pref": "LLM spend is capped at a small one-off prepaid balance with a monthly projection alert.",
+     "source": "memory:llm-provider.md", "quote": "funded with **$10 one-off**"},
+    {"pref": "Security profiles stay local-only: no third-party egress of their data. Any SaaS/cloud candidate would send data off-site.",
+     "source": "memory:llm-provider.md", "quote": "no third-party egress"},
+    {"pref": "Licences are checked from primary sources; non-commercial or source-available terms are a finding.",
+     "source": "memory:licences.md", "quote": "checked from the project's own LICENSE"},
+    {"pref": "Facts are gathered by scripts; the model never collects them or fills gaps by inference.",
+     "source": "file:/root/.hermes/AUTHORITY.md", "quote": "Facts are gathered by scripts. The model is given facts; it never collects"}
+  ]
+}

@@ -1,0 +1,5 @@
+description: 'Hermes Toolsmith: researches replacements for tools the homelab already
+  runs, tests candidates only in a capped throwaway docker sandbox, and recommends
+  ADOPT-TRIAL / WATCH / REJECT with licence, project health, resource fit, migration
+  and rollback. Research and sandbox only; never changes production.'
+description_auto: false

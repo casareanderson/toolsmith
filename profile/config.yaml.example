@@ -1,0 +1,71 @@
+# Hermes profile config for toolsmith. install.sh copies this to
+# $HERMES_HOME/profiles/toolsmith/config.yaml (rendering __SCRIPTS__ / __TOOLSMITH_HOME__ / __HERMES_PY__)
+# unless that file already exists. Model ids are what the author ran on 2026-09-14; swap freely.
+model:
+  provider: openrouter
+  default: qwen/qwen3.7-flash
+  context_length: 1000000
+providers:
+  custom:
+    base_url: http://OLLAMA_HOST:11434/v1      # your local Ollama, or delete the local fallback
+    api_key: ollama
+fallback_providers:
+  - provider: openrouter
+    model: deepseek/deepseek-v4-flash-0731
+  - provider: custom
+    model: qwen3.5-64k                          # local; overflows its context on long research phases
+    base_url: http://OLLAMA_HOST:11434/v1
+  - provider: openrouter
+    model: nvidia/nemotron-3.5-lightning:free
+agent:
+  disabled_toolsets:
+    - browser
+    - tts
+    - clarify
+    - session_search
+    - delegation
+    - computer_use
+    - image_gen
+    - homeassistant
+    - code_execution
+    - cronjob
+    - memory
+    - vision
+    - spotify
+skills:
+  disabled:
+    - claude-code
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+curator:
+  consolidate: false
+plugins:
+  enabled:
+    - observability/langfuse                    # optional; remove if you don't run Langfuse
+    - toolsmith-pii-scrub
+  disabled: []
+# ⚠️ A profile config does NOT inherit the global `web:` block. Without this the
+# profile's web search fell back to a backend that was not running (404s).
+web:
+  backend: searxng
+  search_backend: searxng
+  extract_backend: firecrawl
+  use_gateway: false
+terminal:
+  cwd: __TOOLSMITH_HOME__/workspace
+  timeout: 1200
+hooks_auto_accept: true
+hooks:
+  pre_tool_call:
+    - matcher: .*
+      command: __HERMES_PY__ __SCRIPTS__/toolsmith_guard.py
+      timeout: 15
+      fail_closed: true
+platforms:
+  discord:
+    enabled: false
+  email:
+    enabled: false
+mcp_servers: {}
+timezone: Europe/London

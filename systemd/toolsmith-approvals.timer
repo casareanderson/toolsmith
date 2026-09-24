@@ -1,0 +1,10 @@
+[Unit]
+Description=Hermes Toolsmith approval poller — every 10 minutes
+
+[Timer]
+OnCalendar=*:03/10
+Persistent=false
+Unit=toolsmith-approvals.service
+
+[Install]
+WantedBy=timers.target

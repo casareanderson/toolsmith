@@ -1,0 +1,79 @@
+{
+  "run_id": "ts-20260914-222049-d83f",
+  "started_at": "2026-09-14T21:20:49Z",
+  "spec": {
+    "candidate": "pipeline self-test (traefik/whoami)",
+    "image": "traefik/whoami:v1.10",
+    "port": 80,
+    "health_path": "/health",
+    "env": {},
+    "command": [],
+    "mem_mb": 64,
+    "cpus": 0.5,
+    "pids": 256,
+    "timeout_s": 120,
+    "egress": false,
+    "max_image_mb": 100,
+    "tmpfs": [],
+    "source_url": "https://github.com/traefik/whoami"
+  },
+  "status": "healthy",
+  "refusal_reasons": [],
+  "host": {
+    "node": "192.0.2.20",
+    "ct": 104,
+    "name": "docker"
+  },
+  "host_measurements": [
+    {
+      "node": "192.0.2.20",
+      "ct": 104,
+      "measured_at": "2026-09-14T21:20:51Z",
+      "facts": {
+        "docker": "29.6.1",
+        "rootfs_pct": "56",
+        "disk_free_mb": "25709",
+        "ct_mem_total_mb": "4096",
+        "ct_mem_avail_mb": "1587",
+        "toolsmith_live": "0",
+        "curl": "yes",
+        "systemd_run": "yes",
+        "node_mem_avail_mb": "2343"
+      },
+      "reasons": [],
+      "qualifies": true,
+      "name": "docker"
+    }
+  ],
+  "measurements": {
+    "pull_s": 4.0,
+    "image_size_mb": 2.7,
+    "image_labelled": true,
+    "started": true,
+    "health_url": "http://<container-ip>:80/health",
+    "last_http_code": "200",
+    "healthy": true,
+    "startup_s": 3.6,
+    "docker_stats_raw": "1.242MiB / 64MiB|0.00%|4",
+    "mem_usage_mb": 1.2,
+    "mem_note": "docker stats MemUsage (cgroup usage minus inactive file cache), sampled 10s after first healthy response",
+    "log_tail": [
+      "2026/09/14 21:21:03 Starting up on port 80"
+    ]
+  },
+  "cleanup": {
+    "reaper_armed": true,
+    "left_containers": "0",
+    "left_networks": "0",
+    "left_images": "0",
+    "foreign_containers_changed": "0",
+    "foreign_images_removed": "0",
+    "images_added_and_left": "0",
+    "foreign_volumes_changed": "0",
+    "verified_clean": true
+  },
+  "notes": [
+    "base image absent before this run (this run pulls it and untags it afterwards)"
+  ],
+  "finished_at": "2026-09-14T21:21:21Z"
+}
