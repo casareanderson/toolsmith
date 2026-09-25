@@ -1,0 +1,19 @@
+{
+  "name": "toolsmith-kb-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "schema:deploy": "sanity schema deploy"
+  },
+  "dependencies": {
+    "@sanity/vision": "^5",
+    "react": "^19",
+    "react-dom": "^19",
+    "sanity": "^5",
+    "styled-components": "^6"
+  }
+}
