@@ -100,3 +100,24 @@ def test_real_quantities_still_count():
 
 def test_sandbox_ids_are_not_numbers():
     assert loose_numbers({"claim": "sandbox ts-20260914-230927-e882 passed"}) == []
+
+
+def test_redact_numbers_takes_whole_decimals():
+    from agent.validator import redact_numbers
+    assert redact_numbers("numbers 2.0 and 2 and 20", [2.0]) == "numbers [not verified] and [not verified] and 20"
+
+
+def test_plain_reasons_drop_withheld_numbers():
+    from agent.agent import plain_reasons
+    out = plain_reasons(["the claim states 119.1 but no cited fact backs it",
+                         "the claim states 9.23 but no cited fact backs it",
+                         "4440 MB is not a measurement of F037"])
+    assert out == ["two figures in the claim have no structured source (no cited fact holds them)",
+                   "a number it attributes to F037 is not one of that fact's measurements"]
+    assert not any(ch.isdigit() for ch in out[1].replace("F037", ""))
+
+
+def test_report_queries_route_to_the_kb():
+    from agent.agent import REPORT_QUERY
+    assert REPORT_QUERY.search('*[_type == "report" && kind == "withheld"]{body}')
+    assert not REPORT_QUERY.search('*[_type == "recommendation"]{title}')
