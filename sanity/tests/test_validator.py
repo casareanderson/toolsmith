@@ -86,3 +86,17 @@ def test_redact_numbers_keeps_run_ids():
     from agent.validator import redact_numbers
     out = redact_numbers("run-20260914-2305 found 2305 MB free", [2305.0])
     assert out == "run-20260914-2305 found [not verified] MB free"
+
+
+def test_prose_dates_and_bulletin_ids_are_not_numbers():
+    rec = {"claim": "repo committed Sep 14, 2026; CISA bulletin sb26-208; run 20260914 notes"}
+    assert loose_numbers(rec) == []
+    assert prose_numbers(rec["claim"]) == []
+
+
+def test_real_quantities_still_count():
+    assert loose_numbers({"claim": "needs 4 GB RAM and 2 cores"}) == [4.0, 2.0]
+
+
+def test_sandbox_ids_are_not_numbers():
+    assert loose_numbers({"claim": "sandbox ts-20260914-230927-e882 passed"}) == []
