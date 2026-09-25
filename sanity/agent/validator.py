@@ -35,11 +35,15 @@ DATE = re.compile(r"\b\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2})?Z?)?\b")
 FACT_ID = re.compile(r"\[?F\d{3}\]?")
 REC_ID = re.compile(r"\bREC\s*\d+\b", re.I)
 URL = re.compile(r"https?://\S+")
-RUN_ID = re.compile(r"\b(?:rec-|fact-|run-)?\d{8}-\d{4}(?:-[A-Za-z0-9]+)?\b")
+RUN_ID = re.compile(r"\b(?:rec-|fact-|run-|ts-)?\d{8}-\d{4,6}(?:-[A-Za-z0-9]+)?\b")
 # Versions and image tags: 2026.9.1, v3.1.2, :2026.5.0
 VERSION = re.compile(r"(?:\bv|:)?\b\d+(?:\.\d+){2,}\b")
 # Word-hyphen-number identifiers: licences (Apache-2.0, GPL-3.0-only), DNS-01, ISO-8601 ...
 IDENT = re.compile(r"\b[A-Za-z][A-Za-z0-9+]*(?:-[A-Za-z]+)*-\d+(?:\.\d+)*(?:-[A-Za-z]+)*\b")
+# Dates as prose writes them ("Sep 14, 2026", "14 September 2026") and bare run stamps (20260914)
+PROSE_DATE = re.compile(r"\b(?:\d{1,2}\s+)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?"
+                        r"(?:\s+\d{1,2})?,?\s+\d{4}\b")
+STAMP = re.compile(r"\b20\d{6}\b")
 TOL = 0.005          # 0.5 %: "30.8 MB" in a claim vs 30.8 in the fact
 
 
@@ -72,7 +76,7 @@ def loose_numbers(rec):
     text = rec.get("claim") or ""
     for ident in identifiers(rec):
         text = re.sub(re.escape(ident), " ", text, flags=re.I)
-    for pat in (URL, DATE, RUN_ID, FACT_ID, REC_ID, VERSION):
+    for pat in (URL, DATE, PROSE_DATE, RUN_ID, STAMP, FACT_ID, REC_ID, VERSION, IDENT):
         text = pat.sub(" ", text)
     return [_num(m.group(0)) for m in NUM.finditer(text)]
 
@@ -80,12 +84,12 @@ def loose_numbers(rec):
 def prose_numbers(text):
     """Numbers in free text (an agent's answer) once ids, dates, URLs and word-hyphen-number
     identifiers are removed. Used by the answer guard, where no structured fields exist."""
-    for pat in (URL, DATE, RUN_ID, FACT_ID, REC_ID, VERSION, IDENT):
+    for pat in (URL, DATE, PROSE_DATE, RUN_ID, STAMP, FACT_ID, REC_ID, VERSION, IDENT):
         text = pat.sub(" ", text)
     return [_num(m.group(0)) for m in NUM.finditer(text)]
 
 
-PROTECTED = (URL, DATE, RUN_ID, FACT_ID, REC_ID, VERSION, IDENT)
+PROTECTED = (URL, DATE, PROSE_DATE, RUN_ID, STAMP, FACT_ID, REC_ID, VERSION, IDENT)
 
 
 def redact_numbers(text, bad):

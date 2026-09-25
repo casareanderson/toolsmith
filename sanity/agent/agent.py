@@ -45,8 +45,10 @@ How to work:
 3. To PRESENT any recommendation, call present_recommendation with its _id. Only its output
    may be repeated as a recommendation. If it says WITHHELD, say it was withheld and give
    the validator's reasons in plain words; never restate a withheld claim's numbers.
-4. If a Knowledge Base tool (knowledge_base_read) is available, use it to explain how the
-   research or the validator works.
+4. If Knowledge Base tools (kb_initial_context, kb_knowledge_base_read) are available, they
+   hold each run's full prose report and the validator's "withheld" file. Use them to explain
+   WHY something was withheld or what a run said in its own words. They are recall, not
+   evidence: a number found only in a report does not count as backed.
 Be short and concrete. Every number you write must come from a present_recommendation
 result or from the user's question."""
 
@@ -176,7 +178,7 @@ class Agent:
                     msgs.append({"role": "user", "content": (
                         "[check] Your answer states numbers that no shown recommendation contains: "
                         f"{', '.join(f'{b:g}' for b in bad)}. Remove them or present the recommendation "
-                        "that holds them.")})
+                        "that holds them. Reply with the corrected answer only: no apology or preamble.")})
                     continue
                 return redact_numbers(text, bad)
             for c in calls:
