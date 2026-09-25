@@ -99,4 +99,20 @@ export const recommendation = {
   preview: {select: {title: 'title', subtitle: 'verdict'}},
 }
 
-export const schemaTypes = [toolArea, run, fact, candidateTool, recommendation]
+// Report prose: the source the Context Knowledge Base indexes. Recall, never evidence --
+// a number in a report backs nothing; only a shown recommendation's structured values do.
+const report = {
+  name: 'report', title: 'Run report (prose)', type: 'document',
+  fields: [
+    {name: 'title', type: 'string', validation: (R) => R.required()},
+    {name: 'kind', type: 'string', validation: (R) => R.required(),
+     options: {list: ['report', 'withheld']},
+     description: 'report = the weekly write-up; withheld = the validator\'s reasons file.'},
+    {name: 'run', type: 'reference', to: [{type: 'run'}], validation: (R) => R.required()},
+    {name: 'body', type: 'text', rows: 30, validation: (R) => R.required(), description: 'Markdown, as written.'},
+    {name: 'sourceFile', type: 'string', description: 'Path in the public toolsmith repo.'},
+  ],
+  preview: {select: {title: 'title', subtitle: 'kind'}},
+}
+
+export const schemaTypes = [toolArea, run, fact, candidateTool, recommendation, report]
