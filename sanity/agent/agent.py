@@ -32,6 +32,7 @@ from .mcp_client import MCPClient, MCPError, PublicGroq
 from .validator import REC_QUERY, prose_numbers, redact_numbers, validate
 
 SAFE_ID = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
+REPORT_QUERY = re.compile(r"_type\s*(==|in)[^\]]*[\"\']report[\"\']")
 
 SYSTEM = """You are Toolsmith's knowledge-base assistant for a self-hosted homelab. The knowledge
 base (Sanity, reached through Context MCP) holds research runs, gathered facts with typed
@@ -42,13 +43,16 @@ How to work:
 2. Use groq_query (and schema_explorer when unsure) to find the runs, facts and
    recommendations relevant to the question. Recommendation document ids look like
    "rec-<runId>-<n>".
-3. To PRESENT any recommendation, call present_recommendation with its _id. Only its output
-   may be repeated as a recommendation. If it says WITHHELD, say it was withheld and give
-   the validator's reasons in plain words; never restate a withheld claim's numbers.
+3. The CURRENT status of a recommendation comes only from present_recommendation: call it
+   with the _id before you say anything about that recommendation. Only its output may be
+   repeated as a recommendation. If it says WITHHELD, say so and give the reasons in plain
+   words; never restate a withheld claim's numbers. (The `textValidator` field is the OLD
+   text validator's 2026-09 verdict, kept for history. Don't report it as the status.)
 4. If Knowledge Base tools (kb_initial_context, kb_knowledge_base_read) are available, they
-   hold each run's full prose report and the validator's "withheld" file. Use them to explain
-   WHY something was withheld or what a run said in its own words. They are recall, not
-   evidence: a number found only in a report does not count as backed.
+   hold each run's full prose report and the validator's "withheld" file. For "why" and
+   "what did the run say" questions, call kb_initial_context for the outline, then
+   kb_knowledge_base_read on the relevant entries. They are recall, not evidence: a number
+   found only in the Knowledge Base does not count as backed.
 Be short and concrete. Every number you write must come from a present_recommendation
 result or from the user's question."""
 
@@ -88,6 +92,35 @@ class LLM:
                 if e.code not in (408, 429, 500, 502, 503, 504) or wait is None:
                     raise SystemExit(f"LLM HTTP {e.code}: {e.read()[:200]!r}") from None
             time.sleep(wait)
+
+
+UNBACKED = re.compile(r"^the claim states .+ but no cited fact backs it$")
+NOT_MEASURED = re.compile(r"^.+ is not a measurement of (F\d{3})$")
+
+
+WORDS = "zero one two three four five six seven eight nine ten eleven twelve".split()
+
+
+def _words(n):
+    """Counts in words: a digit here would itself trip the answer guard."""
+    return WORDS[n] if n < len(WORDS) else "more than twelve"
+
+
+def plain_reasons(reasons):
+    """Withheld reasons without the withheld numbers, which the answer guard forbids anyway:
+    "the claim states 119.1 but ..." x6 becomes one line saying six figures lack a source."""
+    unbacked = sum(1 for r in reasons if UNBACKED.match(r))
+    out = []
+    if unbacked:
+        out.append(f"{_words(unbacked)} figure{'s' if unbacked > 1 else ''} in the claim "
+                   f"{'have' if unbacked > 1 else 'has'} no structured source (no cited fact holds "
+                   f"{'them' if unbacked > 1 else 'it'})")
+    for r in reasons:
+        if UNBACKED.match(r):
+            continue
+        m = NOT_MEASURED.match(r)
+        out.append(f"a number it attributes to {m.group(1)} is not one of that fact's measurements" if m else r)
+    return out
 
 
 # ---------------------------------------------------------------- the agent
@@ -138,12 +171,15 @@ class Agent:
             out.update(claim=rec["claim"], backed_by=v["checked"])
             self.shown_numbers |= set(prose_numbers(rec["claim"]))
         else:
-            out["WITHHELD_because"] = v["reasons"]
+            out["WITHHELD_because"] = plain_reasons(v["reasons"])
         return out
 
     def run_tool(self, name, args):
         if name == "present_recommendation":
             return json.dumps(self.present(args.get("id")))
+        if name == "groq_query" and self.kb and REPORT_QUERY.search(args.get("query", "")):
+            return ("Report prose is served by the Knowledge Base on this deployment: use "
+                    "kb_initial_context for the outline, then kb_knowledge_base_read.")
         client = self.kb if name.startswith("kb_") else self.mcp
         name = name[3:] if name.startswith("kb_") else name
         try:

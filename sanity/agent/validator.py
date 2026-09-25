@@ -105,10 +105,11 @@ def redact_numbers(text, bad):
         else:
             keep.append((s, e))
 
+    # Match whole numbers the way the detector reads them, then compare by value, so an
+    # unbacked 2.0 is redacted as "2.0" and never leaves "[not verified].0" behind.
     def scrub(chunk):
-        for b in bad:
-            chunk = re.sub(rf"(?<![\w.]){re.escape(f'{b:g}')}(?![\w])", "[not verified]", chunk)
-        return chunk
+        return NUM.sub(lambda m: "[not verified]" if any(_close(_num(m.group(0)), b) for b in bad)
+                       else m.group(0), chunk)
 
     out, pos = [], 0
     for s, e in keep:
