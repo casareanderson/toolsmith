@@ -417,3 +417,5 @@ MIT. See [LICENSE](LICENSE).
 - The knowledge base uses [Sanity](https://www.sanity.io/) Studio and Context MCP.
 - Models named above (via OpenRouter and Ollama) are configured in `profile/config.yaml.example`; none
   are shipped here.
+
+If this is useful to you, [buy me a coffee](https://buymeacoffee.com/iamc_tech) ☕
