@@ -11,6 +11,11 @@ It needs a working Hermes install and Proxmox LXC containers to sandbox in, so t
 
 Budget about 15 minutes for the first half and an hour for the second.
 
+
+![What a passing run looks like on a fresh machine (excerpt from `setup-check` on 11 October 2026). Secrets in the output are masked](setup-run.png)
+
+*What a passing run looks like on a fresh machine (excerpt from `setup-check` on 11 October 2026). Secrets in the output are masked.*
+
 ## What you need
 
 - A working Hermes Agent install with profiles, `pre_tool_call` shell hooks, plugins and `kanban`.
@@ -182,6 +187,7 @@ sudo systemctl enable --now toolsmith-review.timer toolsmith-approvals.timer
 
 | you see | what it means | what to do |
 |---|---|---|
+| `cp: warning: behavior of -n is non-portable and may change in future` during `install.sh` | newer coreutils warns about `cp -n`, which `install.sh` uses so it never overwrites your files | harmless; it still skips files you already have |
 | `install.sh` stops after copying a few files | an older `install.sh` hit `scripts/__pycache__` left by the tests | update; the current one copies files only |
 | `unreachable via pct exec (rc=255: ssh: ... Connection timed out)` in `hosts` | the Hermes box can't SSH to that node as root | check the key and the address in `TOOLSMITH_PROXMOX_NODES` / `TOOLSMITH_SANDBOX_HOSTS` |
 | every host says it doesn't qualify | free memory, disk or rootfs below the thresholds | pick another CT, or free space; the reasons are printed per host |
