@@ -11,7 +11,8 @@ PY=${HERMES_VENV:-/usr/local/lib/hermes-agent/venv}/bin/python
 SRC=$(cd "$(dirname "$0")" && pwd)
 
 mkdir -p "$S" "$TS"/{workspace,sandbox,reports,quarantine,facts,runs} "$P/plugins"
-install -m 0755 "$SRC"/scripts/* "$S"/
+# files only: running the tests first leaves scripts/__pycache__, which `install` refuses and set -e aborts on
+find "$SRC/scripts" -maxdepth 1 -type f -exec install -m 0755 {} "$S"/ \;
 cp -n "$SRC/toolsmith.conf.example" "$TS/toolsmith.conf"
 cp -n "$SRC/data/areas.json" "$TS/areas.json"
 cp -n "$SRC/data/preferences.json" "$TS/preferences.json"
