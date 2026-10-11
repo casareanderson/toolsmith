@@ -61,6 +61,8 @@ numbers it can't back.*
 
 ## Quick start
 
+Full step-by-step setup, tested every week on a fresh machine: [docs/SETUP.md](docs/SETUP.md).
+
 You need:
 
 - a working Hermes Agent install (profiles, `pre_tool_call` shell hooks, plugins, `kanban`)
