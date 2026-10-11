@@ -13,6 +13,7 @@ recommendation was withheld, so nothing reached the owner. One of the three was 
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue)
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776ab)
 ![Status: experimental](https://img.shields.io/badge/status-experimental-orange)
+[![Buy Me a Coffee](https://raw.githubusercontent.com/casareanderson/.github/main/badges/bmc-yellow.svg)](https://buymeacoffee.com/iamc_tech)
 
 ## Contents
 
