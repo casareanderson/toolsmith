@@ -15,5 +15,8 @@
     "react-dom": "^19",
     "sanity": "^5",
     "styled-components": "^6"
+  },
+  "overrides": {
+    "adm-zip": "0.6.1"
   }
 }
