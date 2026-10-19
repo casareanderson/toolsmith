@@ -20,3 +20,13 @@ def test_adm_zip_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/adm-zip"]
     assert resolved["version"] == "0.6.1"
     assert resolved["resolved"].endswith("/adm-zip-0.6.1.tgz")
+
+
+def test_js_yaml_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["js-yaml"] == "3.15.2"
+    resolved = lock["packages"]["node_modules/js-yaml"]
+    assert resolved["version"] == "3.15.2"
+    assert resolved["resolved"].endswith("/js-yaml-3.15.2.tgz")
