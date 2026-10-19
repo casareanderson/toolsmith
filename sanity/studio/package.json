@@ -17,6 +17,7 @@
     "styled-components": "^6"
   },
   "overrides": {
-    "adm-zip": "0.6.1"
+    "adm-zip": "0.6.1",
+    "js-yaml": "3.15.2"
   }
 }
