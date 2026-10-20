@@ -30,3 +30,11 @@ def test_js_yaml_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/js-yaml"]
     assert resolved["version"] == "3.15.2"
     assert resolved["resolved"].endswith("/js-yaml-3.15.2.tgz")
+
+
+def test_source_map_js_is_resolved_to_a_fixed_version():
+    lock = _read("package-lock.json")
+
+    resolved = lock["packages"]["node_modules/source-map-js"]
+    assert resolved["version"] == "1.2.2"
+    assert resolved["resolved"].endswith("/source-map-js-1.2.2.tgz")
