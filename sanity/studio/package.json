@@ -18,6 +18,7 @@
   },
   "overrides": {
     "adm-zip": "0.6.1",
+    "dompurify": "3.4.17",
     "js-yaml": "3.15.2"
   }
 }
