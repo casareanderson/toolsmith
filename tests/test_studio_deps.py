@@ -48,3 +48,23 @@ def test_sprintf_js_is_resolved_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/sprintf-js"]
     assert resolved["version"] == "1.1.3"
     assert resolved["resolved"].endswith("/sprintf-js-1.1.3.tgz")
+
+
+def test_dompurify_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["dompurify"] == "3.4.17"
+    resolved = lock["packages"]["node_modules/dompurify"]
+    assert resolved["version"] == "3.4.17"
+    assert resolved["resolved"].endswith("/dompurify-3.4.17.tgz")
+
+
+def test_undici_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["undici"] == "7.30.1"
+    resolved = lock["packages"]["node_modules/undici"]
+    assert resolved["version"] == "7.30.1"
+    assert resolved["resolved"].endswith("/undici-7.30.1.tgz")
