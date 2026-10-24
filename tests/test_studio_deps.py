@@ -38,3 +38,13 @@ def test_source_map_js_is_resolved_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/source-map-js"]
     assert resolved["version"] == "1.2.2"
     assert resolved["resolved"].endswith("/source-map-js-1.2.2.tgz")
+
+
+def test_undici_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["undici"] == "7.30.1"
+    resolved = lock["packages"]["node_modules/undici"]
+    assert resolved["version"] == "7.30.1"
+    assert resolved["resolved"].endswith("/undici-7.30.1.tgz")
