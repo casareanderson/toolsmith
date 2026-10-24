@@ -38,3 +38,13 @@ def test_source_map_js_is_resolved_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/source-map-js"]
     assert resolved["version"] == "1.2.2"
     assert resolved["resolved"].endswith("/source-map-js-1.2.2.tgz")
+
+
+def test_sprintf_js_is_resolved_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["sprintf-js"] == "1.1.3"
+    resolved = lock["packages"]["node_modules/sprintf-js"]
+    assert resolved["version"] == "1.1.3"
+    assert resolved["resolved"].endswith("/sprintf-js-1.1.3.tgz")
