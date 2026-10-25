@@ -68,3 +68,13 @@ def test_undici_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/undici"]
     assert resolved["version"] == "7.30.1"
     assert resolved["resolved"].endswith("/undici-7.30.1.tgz")
+
+
+def test_markdown_it_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["markdown-it"] == "14.3.3"
+    resolved = lock["packages"]["node_modules/markdown-it"]
+    assert resolved["version"] == "14.3.3"
+    assert resolved["resolved"].endswith("/markdown-it-14.3.3.tgz")
