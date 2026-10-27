@@ -78,3 +78,13 @@ def test_markdown_it_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/markdown-it"]
     assert resolved["version"] == "14.3.3"
     assert resolved["resolved"].endswith("/markdown-it-14.3.3.tgz")
+
+
+def test_zod_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["zod"] == "4.6.6"
+    resolved = lock["packages"]["node_modules/zod"]
+    assert resolved["version"] == "4.6.6"
+    assert resolved["resolved"].endswith("/zod-4.6.6.tgz")
