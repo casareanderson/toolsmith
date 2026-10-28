@@ -23,6 +23,7 @@
     "dompurify": "3.4.17",
     "undici": "7.30.1",
     "markdown-it": "14.3.3",
-    "zod": "4.6.6"
+    "zod": "4.6.6",
+    "@architect/hydrate": "6.0.2"
   }
 }
