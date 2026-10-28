@@ -88,3 +88,13 @@ def test_zod_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/zod"]
     assert resolved["version"] == "4.6.6"
     assert resolved["resolved"].endswith("/zod-4.6.6.tgz")
+
+
+def test_architect_hydrate_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["@architect/hydrate"] == "6.0.2"
+    resolved = lock["packages"]["node_modules/@architect/hydrate"]
+    assert resolved["version"] == "6.0.2"
+    assert resolved["resolved"].endswith("/hydrate-6.0.2.tgz")
