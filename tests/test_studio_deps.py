@@ -88,3 +88,13 @@ def test_zod_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/zod"]
     assert resolved["version"] == "4.6.6"
     assert resolved["resolved"].endswith("/zod-4.6.6.tgz")
+
+
+def test_architect_utils_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["@architect/utils"] == "6.0.3"
+    resolved = lock["packages"]["node_modules/@architect/utils"]
+    assert resolved["version"] == "6.0.3"
+    assert resolved["resolved"].endswith("/utils-6.0.3.tgz")
