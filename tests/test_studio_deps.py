@@ -88,3 +88,13 @@ def test_zod_is_pinned_to_a_fixed_version():
     resolved = lock["packages"]["node_modules/zod"]
     assert resolved["version"] == "4.6.6"
     assert resolved["resolved"].endswith("/zod-4.6.6.tgz")
+
+
+def test_vite_is_pinned_to_a_fixed_version():
+    pkg = _read("package.json")
+    lock = _read("package-lock.json")
+
+    assert pkg["overrides"]["vite"] == "7.3.7"
+    resolved = lock["packages"]["node_modules/vite"]
+    assert resolved["version"] == "7.3.7"
+    assert resolved["resolved"].endswith("/vite-7.3.7.tgz")
