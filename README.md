@@ -422,3 +422,7 @@ MIT. See [LICENSE](LICENSE).
   are shipped here.
 
 If this is useful to you, [buy me a coffee](https://buymeacoffee.com/iamc_tech) ☕
+
+---
+
+More homelab field notes: https://iamtech.cn1-lab.uk
